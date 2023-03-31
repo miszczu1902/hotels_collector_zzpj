@@ -1,10 +1,10 @@
-package pl.lodz.p.it.zzpj.hotelscollector.HOTELSCOLLETOR;
+package pl.lodz.p.it.zzpj.hotelscollector;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class HotelscolletorApplicationTests {
+class HotelscollectorApplicationTests {
 
 	@Test
 	void contextLoads() {

@@ -9,12 +9,12 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>pl.lodz.p.it.zzpj.hotelscollector</groupId>
-	<artifactId>HOTELSCOLLETOR</artifactId>
+	<artifactId>HOTELSCOLLECTOR</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>HOTELSCOLLETOR</name>
+	<name>HOTELSCOLLECTOR</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
-		<java.version>20</java.version>
+		<java.version>17</java.version>
 	</properties>
 	<dependencies>
 		<dependency>

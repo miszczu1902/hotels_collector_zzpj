@@ -1,13 +1,13 @@
-package pl.lodz.p.it.zzpj.hotelscollector.HOTELSCOLLETOR;
+package pl.lodz.p.it.zzpj.hotelscollector;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class HotelscolletorApplication {
+public class HotelscollectorApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(HotelscolletorApplication.class, args);
+		SpringApplication.run(HotelscollectorApplication.class, args);
 	}
 
 }
