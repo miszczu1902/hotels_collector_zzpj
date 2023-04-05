@@ -7,7 +7,7 @@
 
     <changeSet id="create_user_table" author="hkrolikowski">
         <createTable tableName="users">
-            <column name="id" type="BIGINT">
+            <column name="id" type="BIGINT" autoIncrement="true">
                 <constraints primaryKey="true"/>
             </column>
             <column name="username" type="VARCHAR(32)">
@@ -21,6 +21,9 @@
             </column>
             <column name="is_active" type="BOOLEAN" defaultValue="true"/>
             <column name="is_enable" type="BOOLEAN" defaultValue="true"/>
+            <column name="role" type="VARCHAR(7)">
+                <constraints nullable="false"/>
+            </column>
         </createTable>
     </changeSet>
 

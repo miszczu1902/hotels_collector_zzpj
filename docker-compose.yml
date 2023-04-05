@@ -10,8 +10,3 @@ services:
       POSTGRES_DATABASE: hotel
       POSTGRES_USER: hotel
       POSTGRES_PASSWORD: hotel
-    volumes:
-      - db:/var/lib/postgresql/data
-volumes:
- db:
-    driver: local
