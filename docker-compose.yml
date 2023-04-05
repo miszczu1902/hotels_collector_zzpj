@@ -1,0 +1,12 @@
+version:  "3.8"
+
+services:
+  db:
+    container_name: hotels-database
+    image: postgres:14.1-alpine
+    ports:
+      - "5431:5432"
+    environment:
+      POSTGRES_DATABASE: hotel
+      POSTGRES_USER: hotel
+      POSTGRES_PASSWORD: hotel
