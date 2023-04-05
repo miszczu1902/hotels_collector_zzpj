@@ -7,7 +7,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 
 @SpringBootTest
-class HotelscollectorApplicationTests {
+class HotelsCollectorApplicationTests {
 
 	@Test
 	void shouldTestExampleMethod() {
