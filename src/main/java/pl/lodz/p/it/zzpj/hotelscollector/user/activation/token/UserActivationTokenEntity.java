@@ -25,7 +25,7 @@ public class UserActivationTokenEntity {
 
     @NotNull
     @ManyToOne
-    @JoinColumn(name = "username", nullable = false)
+    @JoinColumn(name = "user_id", nullable = false)
     private UserEntity user;
 }
 

@@ -12,7 +12,7 @@ public class RegistrationListener extends CustomMailSenderListener<RegistrationC
       Hello %s,
       You registered an account on Hotel Collectors, before being able to use your account you need to verify that this is your email address by clicking here:
       %s
-      Kind Regards, Liki
+      Kind Regards, Management of Hotel Collectors
       """;
     private final String appUrl;
 
