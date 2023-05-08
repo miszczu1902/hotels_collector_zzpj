@@ -28,10 +28,11 @@ import org.springframework.security.web.SecurityFilterChain;
 import pl.lodz.p.it.zzpj.hotelscollector.security.jwt.RsaKeyProperties;
 import pl.lodz.p.it.zzpj.hotelscollector.user.CustomUserDetailsService;
 
+import static pl.lodz.p.it.zzpj.hotelscollector.utils.Constans.URI_USERS;
+
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
 @RequiredArgsConstructor
 public class SecurityConfiguration {
     private final RsaKeyProperties rsaKeys;
@@ -39,8 +40,10 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http.cors().and().csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(auth -> { //zmienilem z authorizeRequests
-                    auth.requestMatchers("users" + "/**", //zmienilem z antMatchers
+                .authorizeHttpRequests(auth -> {
+                    auth.requestMatchers(URI_USERS + "/login",
+                                    URI_USERS,
+                                    URI_USERS + "/activate",
                                     "/v2/api-docs",
                                     "/swagger-resources",
                                     "/swagger-resources/**",
@@ -49,8 +52,7 @@ public class SecurityConfiguration {
                                     "/swagger-ui.html",
                                     "/webjars/**",
                                     "/v3/api-docs/**",
-                                    "/swagger-ui/**",
-                                    "**")
+                                    "/swagger-ui/**")
                             .permitAll()
                             .anyRequest()
                             .authenticated();

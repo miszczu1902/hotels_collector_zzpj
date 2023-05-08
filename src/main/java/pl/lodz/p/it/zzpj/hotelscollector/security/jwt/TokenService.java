@@ -1,4 +1,4 @@
-package pl.lodz.p.it.zzpj.hotelscollector.security;
+package pl.lodz.p.it.zzpj.hotelscollector.security.jwt;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;

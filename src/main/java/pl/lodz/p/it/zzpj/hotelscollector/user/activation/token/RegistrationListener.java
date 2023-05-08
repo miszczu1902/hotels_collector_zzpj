@@ -36,7 +36,7 @@ public class RegistrationListener extends CustomMailSenderListener<RegistrationC
     @Override
     public String getMailMessage(RegistrationCompleteEvent event) {
         return MESSAGE.formatted(event.getUser().username(),
-                appUrl + "/users/activation" + "?token=" + event.getUser().token());
+                appUrl + event.getUser().callbackRoute() + "?token=" + event.getUser().token());
     }
 }
 
