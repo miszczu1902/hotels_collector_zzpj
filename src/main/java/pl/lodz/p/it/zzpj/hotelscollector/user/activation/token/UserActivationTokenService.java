@@ -9,7 +9,6 @@ import pl.lodz.p.it.zzpj.hotelscollector.user.UserEntity;
 import pl.lodz.p.it.zzpj.hotelscollector.user.UserRepository;
 
 import java.time.LocalDateTime;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -24,19 +23,6 @@ public class UserActivationTokenService {
         userRepository.findByUsername(user.getUsername()).map(userEntity -> userActivationTokenRepository.save(
                 new UserActivationTokenEntity(token, LocalDateTime.now().plusDays(1), userEntity)));
         return token;
-    }
-
-    public Optional<UserActivationTokenEntity> resetVerificationToken(String username) {
-        return userRepository.findByUsername(username).map(user -> userActivationTokenRepository.save(
-                new UserActivationTokenEntity(UUID.randomUUID().toString(), LocalDateTime.now().plusDays(1), user))).or(() -> {
-            log.warn("User {} not found", username);
-            return Optional.empty();
-        });
-    }
-
-    @Transactional
-    public void deleteOldTokensForUser(String username, String token) {
-        userActivationTokenRepository.deleteAllByUser(username, token);
     }
 
     @Scheduled(fixedRateString = "PT1H")
