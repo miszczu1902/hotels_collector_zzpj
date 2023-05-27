@@ -1,0 +1,35 @@
+title: RoomResponse
+type: object
+properties:
+  id:
+    type: number
+    format: long
+    description: Room id
+  roomSize:
+    type: number
+    format: long
+    description: Room size
+  maximumGuestNumber:
+    type: integer
+    description: Maximum guest number
+  isAirConditioning:
+    type: boolean
+    description: Is air conditioning
+  isSoundproofing:
+    type: boolean
+    description: Ss soundproofing
+  description:
+    type: string
+    description: Description
+  roomFacilities:
+    type: array
+    items:
+      $ref: RoomFacilitiesResponse.yaml
+required:
+  - id
+  - name
+  - roomSize
+  - maximumGuestNumber
+  - isAirConditioning
+  - isSoundproofing
+  - description

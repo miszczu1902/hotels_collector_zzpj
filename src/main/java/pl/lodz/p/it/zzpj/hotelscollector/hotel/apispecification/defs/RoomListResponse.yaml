@@ -1,0 +1,10 @@
+title: HotelListResponse
+type: object
+properties:
+  rooms:
+    type: array
+    items:
+      $ref: RoomResponse.yaml
+    description: Room data
+required:
+  - rooms

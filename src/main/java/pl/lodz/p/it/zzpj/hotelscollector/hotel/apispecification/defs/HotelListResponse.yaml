@@ -1,0 +1,10 @@
+title: HotelListResponse
+type: object
+properties:
+  hotels:
+    type: array
+    items:
+      $ref: HotelResponse.yaml
+    description: Hotel data
+required:
+  - hotels

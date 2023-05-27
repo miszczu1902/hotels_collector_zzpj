@@ -1,0 +1,104 @@
+openapi: 3.0.3
+info:
+  title: Hotel
+  description: ZZPJ 2023
+  version: 1.0.0
+paths:
+  /hotels:
+    get:
+      tags:
+        - hotelsCollector/hotel
+      description: Returns all hotels
+      operationId: getHotels
+      responses:
+        '200':
+          description: List of hotels
+          content:
+            application/json:
+              schema:
+                $ref: ../defs/HotelListResponse.yaml
+        '404':
+          description: Not found any hotel
+
+
+  /hotels/hotel:
+    post:
+      tags:
+        - hotelsCollector/hotel
+      description: Add hotel
+      operationId: addHotel
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: ../defs/HotelRequest.yaml
+      responses:
+        '200':
+          description: Hotel added
+    get:
+      tags:
+        - hotelsCollector/hotel
+      description: Get hotel with given id
+      operationId: getHotel
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Hotel with given id
+          content:
+            application/json:
+              schema:
+                $ref: ../defs/HotelResponse.yaml
+        '404':
+          description: Not found hotel
+
+
+  /hotels/hotel/{id}/room:
+    post:
+      tags:
+        - hotelsCollector/hotel/room
+      description: Add room to hotel with given id
+      operationId: addRoom
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: ../defs/RoomRequest.yaml
+      responses:
+        '200':
+          description: Room added to hotel with given id
+        '404':
+          description: Hotel not found
+
+
+  /hotels/hotel/{id}/rooms:
+    get:
+      tags:
+        - hotelsCollector/hotel/room
+      description: Returns all rooms in hotel with given id
+      operationId: getRoomsInHotel
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: List of rooms in hotel with given id
+          content:
+            application/json:
+              schema:
+                $ref: ../defs/RoomListResponse.yaml
+        '404':
+          description: Not found any room
