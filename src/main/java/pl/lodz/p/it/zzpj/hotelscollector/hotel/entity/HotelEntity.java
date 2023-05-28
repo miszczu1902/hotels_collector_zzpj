@@ -7,11 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Getter
-@AllArgsConstructor
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-@EqualsAndHashCode
+@NoArgsConstructor
 @Entity
-public class Hotel {
+@Table(name = "hotels")
+public class HotelEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "hotel_id")
@@ -42,6 +41,18 @@ public class Hotel {
     private String phoneNumber;
 
     @Setter
-    @OneToMany(mappedBy = "hotel")
-    private List<Room> rooms = new ArrayList<>();
+    @OneToMany(mappedBy = "hotelEntity")
+    private List<RoomEntity> roomEntities = new ArrayList<>();
+
+    public HotelEntity(String name, String longitude, String latitude, String city, String street, String number, String additionalAddressInformation, String phoneNumber, List<RoomEntity> roomEntities) {
+        this.name = name;
+        this.longitude = longitude;
+        this.latitude = latitude;
+        this.city = city;
+        this.street = street;
+        this.number = number;
+        this.additionalAddressInformation = additionalAddressInformation;
+        this.phoneNumber = phoneNumber;
+        this.roomEntities = roomEntities;
+    }
 }

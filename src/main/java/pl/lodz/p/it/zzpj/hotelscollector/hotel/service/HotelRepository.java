@@ -1,14 +1,11 @@
 package pl.lodz.p.it.zzpj.hotelscollector.hotel.service;
 
-import org.springframework.data.repository.CrudRepository;
-import pl.lodz.p.it.zzpj.hotelscollector.hotel.entity.Hotel;
+import org.springframework.data.jpa.repository.JpaRepository;
+import pl.lodz.p.it.zzpj.hotelscollector.hotel.entity.HotelEntity;
 
 import java.util.List;
 
-public interface HotelRepository extends CrudRepository<Hotel, Long> {
+public interface HotelRepository extends JpaRepository<HotelEntity, String> {
 
-    List<Hotel> findHotelByCity(String city);
-
-    Hotel findHotelById(long id);
 
 }

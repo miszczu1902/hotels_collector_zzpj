@@ -8,4 +8,8 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @Service
 public class RoomService {
+
+    private final RoomRepository roomRepository;
+
+
 }

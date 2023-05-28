@@ -2,18 +2,19 @@ package pl.lodz.p.it.zzpj.hotelscollector.hotel.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 @Getter
-@AllArgsConstructor
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-@EqualsAndHashCode
+@NoArgsConstructor
 @Entity
-@Table(name = "room")
-public class Room {
+@Table(name = "rooms")
+public class RoomEntity implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "room_id")
@@ -27,8 +28,7 @@ public class Room {
     @Column(name = "maximum_guest_number", nullable = false)
     private int maximumGuestNumber;
 
-    @ElementCollection
-    @CollectionTable(name = "room_facilities", joinColumns = @JoinColumn(name = "room_id"))
+    @NotNull
     @Column(name = "facility")
     @Enumerated(EnumType.STRING)
     private List<Facilite> roomFacilities  = new ArrayList<>();
@@ -44,5 +44,15 @@ public class Room {
 
     @ManyToOne
     @JoinColumn(name = "hotel_id")
-    private Hotel hotel;
+    private HotelEntity hotelEntity;
+
+    public RoomEntity(long roomSize, int maximumGuestNumber, List<Facilite> roomFacilities, boolean isAirConditioning, boolean isSoundproofing, String description, HotelEntity hotelEntity) {
+        this.roomSize = roomSize;
+        this.maximumGuestNumber = maximumGuestNumber;
+        this.roomFacilities = roomFacilities;
+        this.isAirConditioning = isAirConditioning;
+        this.isSoundproofing = isSoundproofing;
+        this.description = description;
+        this.hotelEntity = hotelEntity;
+    }
 }
