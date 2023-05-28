@@ -1,5 +1,8 @@
 package pl.lodz.p.it.zzpj.hotelscollector.hotel.entity;
 
+import jakarta.persistence.Entity;
+
+
 public enum Facilite {
     Upper_floors_accessible_by_elevator("Upper floors accessible by elevator"),
     Entire_unit_wheelchair_accessible("Entire unit wheelchair accessible"),

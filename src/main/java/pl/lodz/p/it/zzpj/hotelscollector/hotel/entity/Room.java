@@ -16,7 +16,7 @@ import java.util.List;
 public class Room {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "room_id")
     private long id;
 
     @DecimalMin(value = "0")
@@ -27,7 +27,10 @@ public class Room {
     @Column(name = "maximum_guest_number", nullable = false)
     private int maximumGuestNumber;
 
-    @OneToMany(mappedBy = "room")
+    @ElementCollection
+    @CollectionTable(name = "room_facilities", joinColumns = @JoinColumn(name = "room_id"))
+    @Column(name = "facility")
+    @Enumerated(EnumType.STRING)
     private List<Facilite> roomFacilities  = new ArrayList<>();
 
     @Column(name = "is_air_conditioning", nullable = false)
@@ -38,4 +41,8 @@ public class Room {
 
     @Column(name = "description", nullable = false)
     private String description;
+
+    @ManyToOne
+    @JoinColumn(name = "hotel_id")
+    private Hotel hotel;
 }

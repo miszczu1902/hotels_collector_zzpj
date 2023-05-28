@@ -14,7 +14,7 @@ import java.util.List;
 public class Hotel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "hotel_id")
     private long id;
 
     @Column(name = "name", nullable = false)
