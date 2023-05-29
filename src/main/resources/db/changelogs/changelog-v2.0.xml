@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.17.xsd">
+
+    <changeSet id="1685385305187-1" author="mmalinowska">
+        <createTable tableName="hotels">
+            <column autoIncrement="true" name="hotel_id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_hotels"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="longitude" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="latitude" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="city" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="street" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="number" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="additional_address_information" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="phone_number" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <createTable tableName="rooms">
+            <column autoIncrement="true" name="room_id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_rooms"/>
+            </column>
+            <column name="room_size" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="maximum_guest_number" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="facility" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="is_air_conditioning" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+            <column name="is_soundproofing" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="hotel_id" type="BIGINT"/>
+        </createTable>
+        <addForeignKeyConstraint baseColumnNames="hotel_id" baseTableName="rooms" constraintName="FK_ROOMS_ON_HOTEL" referencedColumnNames="hotel_id" referencedTableName="hotels"/>
+    </changeSet>
+</databaseChangeLog>

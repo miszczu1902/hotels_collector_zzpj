@@ -6,8 +6,6 @@ import org.openapitools.model.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 import pl.lodz.p.it.zzpj.hotelscollector.hotel.service.HotelService;
-import pl.lodz.p.it.zzpj.hotelscollector.hotel.service.RoomService;
-import pl.lodz.p.it.zzpj.hotelscollector.user.UserService;
 
 import java.net.URI;
 
@@ -18,7 +16,6 @@ import static pl.lodz.p.it.zzpj.hotelscollector.utils.Constans.URI_HOTELS;
 public class HotelController implements HotelsApi {
 
     private final HotelService hotelService;
-    private final RoomService roomService;
 
     @Override
     public ResponseEntity<HotelResponse> addHotel(HotelRequest hotelRequest) {
@@ -29,21 +26,29 @@ public class HotelController implements HotelsApi {
 
     @Override
     public ResponseEntity<Void> addRoom(String id, RoomRequest roomRequest) {
-        return HotelsApi.super.addRoom(id, roomRequest);
-    }
-
-    @Override
-    public ResponseEntity<HotelResponse> getHotel(String id) {
+        hotelService.addRoomInHotel(id, roomRequest);
         return ResponseEntity.ok().build();
     }
 
     @Override
+    public ResponseEntity<HotelResponse> getHotel(String id) {
+        var hotel = hotelService.getHotelById(id);
+        return hotel.map(hotelResponse -> ResponseEntity.ok().body(hotelResponse)).orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @Override
     public ResponseEntity<HotelListResponse> getHotels() {
-        return HotelsApi.super.getHotels();
+        var hotels = hotelService.getAllHotels();
+        return hotels.getHotels().isEmpty() ?
+                ResponseEntity.notFound().build() :
+                ResponseEntity.ok(hotels);
     }
 
     @Override
     public ResponseEntity<RoomListResponse> getRoomsInHotel(String id) {
-        return HotelsApi.super.getRoomsInHotel(id);
+        var rooms = hotelService.getAllRoomsInHotel(id);
+        return rooms == null ?
+                ResponseEntity.notFound().build() :
+                ResponseEntity.ok(rooms);
     }
 }
