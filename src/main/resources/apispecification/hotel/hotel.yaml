@@ -39,6 +39,8 @@ paths:
             application/json:
               schema:
                 $ref: ../defs/HotelResponse.yaml
+
+  /hotels/hotel/{id}:
     get:
       tags:
         - hotelsCollector/hotel
@@ -59,7 +61,22 @@ paths:
                 $ref: ../defs/HotelResponse.yaml
         '404':
           description: Not found hotel
-
+    delete:
+      tags:
+        - hotelsCollector/hotel
+      description: Delete hotel with given id
+      operationId: deleteHotel
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Hotel with given id deleted
+        '404':
+          description: Not found hotel
 
   /hotels/hotel/{id}/room:
     post:
@@ -82,8 +99,55 @@ paths:
         '200':
           description: Room added to hotel with given id
         '404':
-          description: Hotel not found
+          description: Room not found
 
+  /hotels/hotel/{id}/room/{idRoom}:
+    get:
+      tags:
+        - hotelsCollector/hotel/room
+      description: Get room with given id in hotel with given id
+      operationId: getRoomInHotel
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: idRoom
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Room with given id in hotel with given id
+          content:
+            application/json:
+              schema:
+                $ref: ../defs/RoomResponse.yaml
+        '404':
+          description: Not found hotel
+    delete:
+      tags:
+        - hotelsCollector/hotel/room
+      description: Delete room with given id in hotel with given id
+      operationId: deleteRoomInHotel
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: idRoom
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Room removed from hotel with given id
+        '404':
+          description: Room not found
 
   /hotels/hotel/{id}/rooms:
     get:

@@ -6,12 +6,10 @@ properties:
     maxLength: 64
     description: Hotel name
   longitude:
-    type: number
-    format: long
+    type: string
     description: Longitude
   latitude:
-    type: number
-    format: long
+    type: string
     description: Latitude
   city:
     type: string

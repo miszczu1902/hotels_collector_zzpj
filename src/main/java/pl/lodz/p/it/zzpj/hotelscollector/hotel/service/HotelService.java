@@ -18,6 +18,8 @@ public class HotelService {
 
     private final HotelRepository hotelRepository;
 
+    private final RoomService roomService;
+
     @Transactional
     public long addHotel(HotelRequest hotelRequest) {
         HotelEntity createdHotel = hotelRepository.save(HotelMapper.toHotelEntity(hotelRequest));
@@ -46,4 +48,25 @@ public class HotelService {
         hotel.ifPresent(hotelEntity -> hotelEntity.getRoomEntities().add(RoomMapper.toRoomEntity(roomRequest)));
     }
 
+    @Transactional
+    public void deleteHotel(String id) {
+        var hotel = hotelRepository.findById(id);
+        hotel.ifPresent(hotelRepository::delete);
+    }
+
+    @Transactional
+    public void deleteRoomInHotel(String id, String idRoom) {
+        var hotel = hotelRepository.findById(id).orElseThrow();
+        var room = roomService.getRoomEntityById(idRoom).orElseThrow();
+        var roomInHotel = hotel.getRoomEntities();
+        roomInHotel.remove(room);
+    }
+
+    @Transactional
+    public RoomResponse getRoomInHotel(String id, String idRoom) {
+        var hotel = hotelRepository.findById(id).orElseThrow();
+        var rooms = hotel.getRoomEntities();
+        var room = rooms.stream().filter(roomEntity -> roomEntity.getId() == Long.parseLong(idRoom)).findFirst().orElseThrow();
+        return RoomMapper.toRoomResponse(room);
+    }
 }

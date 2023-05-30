@@ -6,20 +6,21 @@ import pl.lodz.p.it.zzpj.hotelscollector.hotel.entity.HotelEntity;
 import pl.lodz.p.it.zzpj.hotelscollector.hotel.entity.RoomEntity;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 
 public class HotelMapper {
 
     public static HotelEntity toHotelEntity(HotelRequest hotelRequest) {
         return new HotelEntity(
                 hotelRequest.getName(),
-                hotelRequest.getLongitude().toPlainString(),
-                hotelRequest.getLatitude().toPlainString(),
+                hotelRequest.getLongitude(),
+                hotelRequest.getLatitude(),
                 hotelRequest.getCity(),
                 hotelRequest.getStreet(),
                 hotelRequest.getNumber(),
                 hotelRequest.getAdditionalAddressInformation(),
                 hotelRequest.getPhoneNumber(),
-                null
+                new ArrayList<>()
         );
     }
 

@@ -51,4 +51,22 @@ public class HotelController implements HotelsApi {
                 ResponseEntity.notFound().build() :
                 ResponseEntity.ok(rooms);
     }
+
+    @Override
+    public ResponseEntity<Void> deleteHotel(String id) {
+        hotelService.deleteHotel(id);
+        return ResponseEntity.ok().build();
+    }
+
+    @Override
+    public ResponseEntity<Void> deleteRoomInHotel(String id, String idRoom) {
+        hotelService.deleteRoomInHotel(id, idRoom);
+        return ResponseEntity.ok().build();
+    }
+
+    @Override
+    public ResponseEntity<RoomResponse> getRoomInHotel(String id, String idRoom) {
+        var room = hotelService.getRoomInHotel(id, idRoom);
+        return ResponseEntity.ok(room);
+    }
 }
