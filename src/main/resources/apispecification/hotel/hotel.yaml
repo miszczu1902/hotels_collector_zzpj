@@ -101,7 +101,7 @@ paths:
         '404':
           description: Room not found
 
-  /hotels/hotel/{id}/room/{idRoom}:
+  /hotels/hotel/room/{id}:
     get:
       tags:
         - hotelsCollector/hotel/room
@@ -109,11 +109,6 @@ paths:
       operationId: getRoomInHotel
       parameters:
         - name: id
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: idRoom
           in: path
           required: true
           schema:
@@ -138,16 +133,53 @@ paths:
           required: true
           schema:
             type: string
-        - name: idRoom
-          in: path
-          required: true
-          schema:
-            type: string
       responses:
         '200':
           description: Room removed from hotel with given id
         '404':
           description: Room not found
+    put:
+      tags:
+        - hotelsCollector/hotel/room
+      description: Edit room with given id
+      operationId: editRoomInHotel
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: ../defs/EditRoomRequest.yaml
+      responses:
+        '200':
+          description: Room edited
+        '422' :
+          description: Cannot edit room
+
+  /hotels/hotel/room/{id}/facilities:
+    post:
+      tags:
+        - hotelsCollector/hotel/room/facilities
+      description: Add facilities to room
+      operationId: addFacilitiesToRoom
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: ../defs/RoomFacilitiesRequest.yaml
+      responses:
+        '200':
+          description: Facilities added
 
   /hotels/hotel/{id}/rooms:
     get:

@@ -22,9 +22,8 @@ properties:
     type: string
     description: Description
   roomFacilities:
-    type: array
-    items:
-      $ref: RoomFacilitiesResponse.yaml
+    type: string
+    description: Room facilities.
 required:
   - id
   - name

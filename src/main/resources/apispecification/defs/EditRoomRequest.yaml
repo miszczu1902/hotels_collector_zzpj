@@ -1,10 +1,6 @@
-title: RoomRequest
+title: EditRoomRequest
 type: object
 properties:
-  roomSize:
-    type: number
-    format: long
-    description: Room size
   maximumGuestNumber:
     type: integer
     description: Maximum guest number
@@ -21,9 +17,3 @@ properties:
     type: array
     items:
       $ref: RoomFacilitiesResponse.yaml
-required:
-  - roomSize
-  - maximumGuestNumber
-  - isAirConditioning
-  - isSoundproofing
-  - description

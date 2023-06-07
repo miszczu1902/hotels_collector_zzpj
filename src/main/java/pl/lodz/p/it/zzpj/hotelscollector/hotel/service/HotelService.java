@@ -6,9 +6,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.openapitools.model.*;
 import org.springframework.stereotype.Service;
 import pl.lodz.p.it.zzpj.hotelscollector.hotel.controller.HotelMapper;
-import pl.lodz.p.it.zzpj.hotelscollector.hotel.controller.RoomMapper;
 import pl.lodz.p.it.zzpj.hotelscollector.hotel.entity.HotelEntity;
 
+import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -16,9 +16,8 @@ import java.util.Optional;
 @Service
 public class HotelService {
 
-    private final HotelRepository hotelRepository;
 
-    private final RoomService roomService;
+    private final HotelRepository hotelRepository;
 
     @Transactional
     public long addHotel(HotelRequest hotelRequest) {
@@ -27,46 +26,30 @@ public class HotelService {
     }
 
     @Transactional
-    public Optional<HotelResponse> getHotelById(String id) {
-        return hotelRepository.findById(id).map(HotelMapper::toHotelResponse);
+    public Optional<HotelEntity> getHotelById(String id) {
+        return hotelRepository.findById(id);
     }
 
     @Transactional
-    public HotelListResponse getAllHotels() {
-        return new HotelListResponse().hotels(hotelRepository.findAll().stream().map(HotelMapper::toHotelResponse).toList());
+    public List<HotelEntity> getAllHotels() {
+        var hotels = hotelRepository.findAll();
+
+        if(hotels.isEmpty()) {
+            return null;
+        }
+        return hotels;
     }
 
+
     @Transactional
-    public RoomListResponse getAllRoomsInHotel(String id) {
+    public boolean deleteHotel(String id) {
         var hotel = hotelRepository.findById(id);
-        return hotel.map(hotelEntity -> new RoomListResponse().rooms(hotelEntity.getRoomEntities().stream().map(RoomMapper::toRoomResponse).toList())).orElse(null);
+        if(hotel.isPresent()) {
+            hotelRepository.delete(hotel.get());
+        } else {
+            return false;
+        }
+        return true;
     }
 
-    @Transactional
-    public void addRoomInHotel(String id, RoomRequest roomRequest) {
-        var hotel = hotelRepository.findById(id);
-        hotel.ifPresent(hotelEntity -> hotelEntity.getRoomEntities().add(RoomMapper.toRoomEntity(roomRequest)));
-    }
-
-    @Transactional
-    public void deleteHotel(String id) {
-        var hotel = hotelRepository.findById(id);
-        hotel.ifPresent(hotelRepository::delete);
-    }
-
-    @Transactional
-    public void deleteRoomInHotel(String id, String idRoom) {
-        var hotel = hotelRepository.findById(id).orElseThrow();
-        var room = roomService.getRoomEntityById(idRoom).orElseThrow();
-        var roomInHotel = hotel.getRoomEntities();
-        roomInHotel.remove(room);
-    }
-
-    @Transactional
-    public RoomResponse getRoomInHotel(String id, String idRoom) {
-        var hotel = hotelRepository.findById(id).orElseThrow();
-        var rooms = hotel.getRoomEntities();
-        var room = rooms.stream().filter(roomEntity -> roomEntity.getId() == Long.parseLong(idRoom)).findFirst().orElseThrow();
-        return RoomMapper.toRoomResponse(room);
-    }
 }

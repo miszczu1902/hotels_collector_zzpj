@@ -1,0 +1,31 @@
+title: RoomFacilitiesRequest
+type: object
+properties:
+  facilities:
+    type: array
+    items:
+      type: string
+      enum:
+        - Upper_floors_accessible_by_elevator
+        - Entire_unit_wheelchair_accessible
+        - Linen
+        - Wardrobe_or_closet
+        - Tea_Coffee_maker
+        - Minibar
+        - Safety_deposit_box
+        - Ironing_facilities
+        - Iron
+        - Electric_kettle
+        - Desk
+        - Seating_Area
+        - TV
+        - Telephone
+        - Satellite_channels
+        - Radio
+        - Pay_per_view_channels
+        - Flat_screen_TV
+        - Socket_near_the_bed
+        - Clothes_rack
+        - Wake_up_service_Alarm_clock
+required:
+  - facilities

@@ -17,7 +17,7 @@ public class RoomEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "room_id")
+    @Column(name = "id")
     private long id;
 
     @DecimalMin(value = "0")
@@ -25,28 +25,33 @@ public class RoomEntity implements Serializable {
     private long roomSize;
 
     @DecimalMin(value = "1")
+    @Setter
     @Column(name = "maximum_guest_number", nullable = false)
     private int maximumGuestNumber;
 
     @NotNull
+    @Setter
     @Column(name = "facility")
-    @Enumerated(EnumType.STRING)
-    private List<Facilite> roomFacilities  = new ArrayList<>();
+    private String roomFacilities;
 
+    @Setter
     @Column(name = "is_air_conditioning", nullable = false)
     private boolean isAirConditioning;
 
+    @Setter
     @Column(name = "is_soundproofing", nullable = false)
     private boolean isSoundproofing;
 
+    @Setter
     @Column(name = "description", nullable = false)
     private String description;
 
     @ManyToOne
-    @JoinColumn(name = "hotel_id")
+    @JoinColumn(name = "hotel_id", nullable = false)
+    @Setter
     private HotelEntity hotelEntity;
 
-    public RoomEntity(long roomSize, int maximumGuestNumber, List<Facilite> roomFacilities, boolean isAirConditioning, boolean isSoundproofing, String description, HotelEntity hotelEntity) {
+    public RoomEntity(long roomSize, int maximumGuestNumber, String roomFacilities, boolean isAirConditioning, boolean isSoundproofing, String description, HotelEntity hotelEntity) {
         this.roomSize = roomSize;
         this.maximumGuestNumber = maximumGuestNumber;
         this.roomFacilities = roomFacilities;

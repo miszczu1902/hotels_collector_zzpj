@@ -4,11 +4,10 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.17.xsd">
-
-    <changeSet id="1685385305187-1" author="mmalinowska">
+    <changeSet id="fix_hotels_table" author="mmalinowska">
         <createTable tableName="hotels">
-            <column autoIncrement="true" name="hotel_id" type="BIGINT">
-                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_hotels"/>
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true"/>
             </column>
             <column name="name" type="VARCHAR(255)">
                 <constraints nullable="false"/>
@@ -35,9 +34,10 @@
                 <constraints nullable="false"/>
             </column>
         </createTable>
+    </changeSet>
+    <changeSet id="fix_hotels_rooms" author="mmalinowska">
         <createTable tableName="rooms">
-            <column autoIncrement="true" name="room_id" type="BIGINT">
-                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_rooms"/>
+            <column autoIncrement="true" name="id" type="BIGINT">
             </column>
             <column name="room_size" type="BIGINT">
                 <constraints nullable="false"/>
@@ -59,6 +59,11 @@
             </column>
             <column name="hotel_id" type="BIGINT"/>
         </createTable>
-        <addForeignKeyConstraint baseColumnNames="hotel_id" baseTableName="rooms" constraintName="FK_ROOMS_ON_HOTEL" referencedColumnNames="hotel_id" referencedTableName="hotels"/>
+        <addPrimaryKey tableName="rooms" columnNames="id"/>
+        <addForeignKeyConstraint baseTableName="rooms"
+                                 baseColumnNames="hotel_id"
+                                 constraintName="fk_rooms_hotels"
+                                 referencedTableName="hotels"
+                                 referencedColumnNames="id"/>
     </changeSet>
 </databaseChangeLog>

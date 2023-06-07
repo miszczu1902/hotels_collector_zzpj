@@ -13,7 +13,7 @@ import java.util.List;
 public class HotelEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "hotel_id")
+    @Column(name = "id")
     private long id;
 
     @Column(name = "name", nullable = false)
@@ -41,7 +41,7 @@ public class HotelEntity {
     private String phoneNumber;
 
     @Setter
-    @OneToMany(mappedBy = "hotelEntity")
+    @OneToMany(mappedBy = "hotelEntity", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<RoomEntity> roomEntities = new ArrayList<>();
 
     public HotelEntity(String name, String longitude, String latitude, String city, String street, String number, String additionalAddressInformation, String phoneNumber, List<RoomEntity> roomEntities) {
