@@ -7,8 +7,10 @@ import pl.lodz.p.it.zzpj.hotelscollector.hotel.entity.RoomEntity;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.List;
 
 public class HotelMapper {
+
 
     public static HotelEntity toHotelEntity(HotelRequest hotelRequest) {
         return new HotelEntity(
@@ -25,7 +27,7 @@ public class HotelMapper {
     }
 
     public static HotelResponse toHotelResponse(HotelEntity hotelEntity) {
-        return new HotelResponse()
+        HotelResponse hotelResponse = new HotelResponse()
                 .id(BigDecimal.valueOf(hotelEntity.getId()))
                 .name(hotelEntity.getName())
                 .longitude(hotelEntity.getLongitude())
@@ -34,8 +36,17 @@ public class HotelMapper {
                 .street(hotelEntity.getStreet())
                 .number(hotelEntity.getNumber())
                 .additionalAddressInformation(hotelEntity.getAdditionalAddressInformation())
-                .phoneNumber(hotelEntity.getPhoneNumber())
-                .rooms(hotelEntity.getRoomEntities().stream().map(HotelMapper::toRoomResponse).toList());
+                .phoneNumber(hotelEntity.getPhoneNumber());
+
+        List<RoomResponse> roomResponses = new ArrayList<>();
+        List<RoomEntity> roomEntities = hotelEntity.getRoomEntities();
+
+        if (roomEntities != null && !roomEntities.isEmpty()) {
+            roomResponses = roomEntities.stream().map(HotelMapper::toRoomResponse).toList();
+        }
+
+        hotelResponse.setRooms(roomResponses);
+        return hotelResponse;
     }
 
 
@@ -55,6 +66,20 @@ public class HotelMapper {
                 .isAirConditioning(roomEntity.isAirConditioning())
                 .isSoundproofing(roomEntity.isSoundproofing())
                 .description(roomEntity.getDescription())
-                .roomFacilities(roomEntity.getRoomFacilities().stream().map(HotelMapper::toRoomFacilitiesResponse).toList());
+                .roomFacilities(roomEntity.getRoomFacilities()
+                        .replace("[", " ")
+                        .replace("]", " "));
+    }
+
+    public static RoomEntity toRoomEntity(RoomRequest roomRequest, HotelEntity hotelEntity) {
+        return new RoomEntity(roomRequest.getRoomSize().longValue(),
+                roomRequest.getMaximumGuestNumber(),
+                roomRequest.getRoomFacilities().stream().map(HotelMapper::toFacilite).toList().toString()
+                        .replace("[", " ")
+                        .replace("]", " "),
+                roomRequest.getIsAirConditioning(),
+                roomRequest.getIsSoundproofing(),
+                roomRequest.getDescription(),
+                hotelEntity);
     }
 }

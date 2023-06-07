@@ -6,6 +6,7 @@ import org.openapitools.model.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 import pl.lodz.p.it.zzpj.hotelscollector.hotel.service.HotelService;
+import pl.lodz.p.it.zzpj.hotelscollector.hotel.service.RoomService;
 
 import java.net.URI;
 
@@ -17,6 +18,8 @@ public class HotelController implements HotelsApi {
 
     private final HotelService hotelService;
 
+    private final RoomService roomService;
+
     @Override
     public ResponseEntity<HotelResponse> addHotel(HotelRequest hotelRequest) {
         long createdHotelId = hotelService.addHotel(hotelRequest);
@@ -26,47 +29,96 @@ public class HotelController implements HotelsApi {
 
     @Override
     public ResponseEntity<Void> addRoom(String id, RoomRequest roomRequest) {
-        hotelService.addRoomInHotel(id, roomRequest);
-        return ResponseEntity.ok().build();
+        var hotel = hotelService.getHotelById(id);
+        if(hotel.isEmpty()) {
+            return ResponseEntity.unprocessableEntity().build();
+        }
+        long createdRoomId = roomService.addRoom(roomRequest, hotel.get());
+        return ResponseEntity
+                .created(URI.create(URI_HOTELS + "/room/" +createdRoomId)).build();
     }
 
     @Override
     public ResponseEntity<HotelResponse> getHotel(String id) {
         var hotel = hotelService.getHotelById(id);
-        return hotel.map(hotelResponse -> ResponseEntity.ok().body(hotelResponse)).orElseGet(() -> ResponseEntity.notFound().build());
+        if (hotel.isPresent()) {
+            var responseBody = HotelMapper.toHotelResponse(hotel.get());
+            return ResponseEntity.ok(responseBody);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @Override
     public ResponseEntity<HotelListResponse> getHotels() {
-        var hotels = hotelService.getAllHotels();
-        return hotels.getHotels().isEmpty() ?
-                ResponseEntity.notFound().build() :
-                ResponseEntity.ok(hotels);
+        if(hotelService.getAllHotels() == null) {
+            return ResponseEntity.notFound().build();
+        }
+        var responseBody = hotelService.getAllHotels().stream().map(HotelMapper::toHotelResponse).toList();
+        return ResponseEntity.ok(new HotelListResponse().hotels(responseBody));
     }
 
     @Override
     public ResponseEntity<RoomListResponse> getRoomsInHotel(String id) {
-        var rooms = hotelService.getAllRoomsInHotel(id);
-        return rooms == null ?
-                ResponseEntity.notFound().build() :
-                ResponseEntity.ok(rooms);
+        var hotel = hotelService.getHotelById(id);
+        if(hotel.isEmpty()) {
+            return ResponseEntity.unprocessableEntity().build();
+        }
+        var rooms = roomService.getAllRoomsInHotel(hotel.get());
+        var responseBody = rooms.stream().map(HotelMapper::toRoomResponse).toList();
+        return ResponseEntity.ok(new RoomListResponse().rooms(responseBody));
     }
 
     @Override
     public ResponseEntity<Void> deleteHotel(String id) {
-        hotelService.deleteHotel(id);
-        return ResponseEntity.ok().build();
+        var deleted = hotelService.deleteHotel(id);
+        if (deleted) {
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @Override
-    public ResponseEntity<Void> deleteRoomInHotel(String id, String idRoom) {
-        hotelService.deleteRoomInHotel(id, idRoom);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<Void> deleteRoomInHotel(String id) {
+        var deleted = roomService.deleteRoom(id);
+        if (deleted) {
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @Override
-    public ResponseEntity<RoomResponse> getRoomInHotel(String id, String idRoom) {
-        var room = hotelService.getRoomInHotel(id, idRoom);
-        return ResponseEntity.ok(room);
+    public ResponseEntity<RoomResponse> getRoomInHotel(String id) {
+        var room = roomService.getRoom(id);
+        if (room.isPresent()) {
+            var responseBody = HotelMapper.toRoomResponse(room.get());
+            return ResponseEntity.ok(responseBody);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @Override
+    public ResponseEntity<Void> addFacilitiesToRoom(String id, RoomFacilitiesRequest roomFacilitiesRequest) {
+        var room = roomService.getRoom(id);
+        if (room.isPresent()) {
+            roomService.addFacilities(id, roomFacilitiesRequest.getFacilities().toString());
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @Override
+    public ResponseEntity<Void> editRoomInHotel(String id, EditRoomRequest editRoomRequest) {
+        var room = roomService.getRoom(id);
+        if (room.isPresent()) {
+            roomService.editRoom(id,editRoomRequest);
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 }
