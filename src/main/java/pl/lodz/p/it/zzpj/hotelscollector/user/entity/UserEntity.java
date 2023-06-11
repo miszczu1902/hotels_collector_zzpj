@@ -1,4 +1,4 @@
-package pl.lodz.p.it.zzpj.hotelscollector.user;
+package pl.lodz.p.it.zzpj.hotelscollector.user.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
@@ -7,6 +7,7 @@ import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import pl.lodz.p.it.zzpj.hotelscollector.utils.UserRole;
 
 import java.io.Serializable;
 

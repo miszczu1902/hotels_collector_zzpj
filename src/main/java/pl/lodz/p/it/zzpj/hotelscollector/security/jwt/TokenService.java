@@ -16,10 +16,10 @@ public class TokenService {
 
     private final JwtEncoder encoder;
 
-    public String generateToken(String username, Authentication authentication) {
+    public String generateToken(Authentication authentication) {
         final JwtClaimsSet claims = JwtClaimsSet.builder().issuer("self").issuedAt(Instant.now())
                 .expiresAt(Instant.now().plusSeconds(3600))
-                .subject(username).claim("roles",
+                .subject(authentication.getName()).claim("roles",
                         authentication.getAuthorities().stream().map(GrantedAuthority::getAuthority).toList())
                 .build();
         return encoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();

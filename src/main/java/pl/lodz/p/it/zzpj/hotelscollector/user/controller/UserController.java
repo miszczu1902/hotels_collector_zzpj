@@ -1,4 +1,4 @@
-package pl.lodz.p.it.zzpj.hotelscollector.user;
+package pl.lodz.p.it.zzpj.hotelscollector.user.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -12,9 +12,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import pl.lodz.p.it.zzpj.hotelscollector.security.jwt.TokenService;
+import pl.lodz.p.it.zzpj.hotelscollector.user.service.UserService;
 import pl.lodz.p.it.zzpj.hotelscollector.user.activation.token.RegistrationCompleteEvent;
-import pl.lodz.p.it.zzpj.hotelscollector.user.activation.token.TokenUserDTO;
-import pl.lodz.p.it.zzpj.hotelscollector.user.activation.token.UserActivationTokenService;
+import pl.lodz.p.it.zzpj.hotelscollector.user.dto.*;
+import pl.lodz.p.it.zzpj.hotelscollector.user.service.UserActivationTokenService;
 
 import java.net.URI;
 
@@ -60,7 +61,7 @@ public class UserController {
     public ResponseEntity<Void> token(@RequestBody LoginDTO loginDTO) {
         final Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginDTO.username(), loginDTO.password()));
-        return ResponseEntity.ok().header(HttpHeaders.AUTHORIZATION, "Bearer " + tokenService.generateToken(loginDTO.username(),authentication))
+        return ResponseEntity.ok().header(HttpHeaders.AUTHORIZATION, "Bearer " + tokenService.generateToken(authentication))
                 .build();
     }
 

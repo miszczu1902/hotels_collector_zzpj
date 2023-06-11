@@ -1,4 +1,4 @@
-package pl.lodz.p.it.zzpj.hotelscollector.user.activation.token;
+package pl.lodz.p.it.zzpj.hotelscollector.user.dto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

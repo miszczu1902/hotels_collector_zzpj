@@ -1,4 +1,4 @@
-package pl.lodz.p.it.zzpj.hotelscollector.user;
+package pl.lodz.p.it.zzpj.hotelscollector.user.service;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
@@ -7,7 +7,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import pl.lodz.p.it.zzpj.hotelscollector.user.activation.token.UserActivationTokenRepository;
+import pl.lodz.p.it.zzpj.hotelscollector.utils.UserRole;
+import pl.lodz.p.it.zzpj.hotelscollector.user.dto.RegisterUserDTO;
+import pl.lodz.p.it.zzpj.hotelscollector.user.entity.UserEntity;
 import pl.lodz.p.it.zzpj.hotelscollector.utils.exceptions.*;
 
 import java.time.LocalDateTime;

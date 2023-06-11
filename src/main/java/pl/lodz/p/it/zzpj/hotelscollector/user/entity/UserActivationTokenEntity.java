@@ -1,11 +1,11 @@
-package pl.lodz.p.it.zzpj.hotelscollector.user.activation.token;
+package pl.lodz.p.it.zzpj.hotelscollector.user.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import pl.lodz.p.it.zzpj.hotelscollector.user.UserEntity;
+import pl.lodz.p.it.zzpj.hotelscollector.user.entity.UserEntity;
 
 import java.time.LocalDateTime;
 

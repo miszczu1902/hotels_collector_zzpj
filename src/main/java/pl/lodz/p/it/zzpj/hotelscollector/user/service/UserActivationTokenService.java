@@ -1,12 +1,12 @@
-package pl.lodz.p.it.zzpj.hotelscollector.user.activation.token;
+package pl.lodz.p.it.zzpj.hotelscollector.user.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import pl.lodz.p.it.zzpj.hotelscollector.user.UserEntity;
-import pl.lodz.p.it.zzpj.hotelscollector.user.UserRepository;
+import pl.lodz.p.it.zzpj.hotelscollector.user.entity.UserActivationTokenEntity;
+import pl.lodz.p.it.zzpj.hotelscollector.user.entity.UserEntity;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
