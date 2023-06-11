@@ -21,7 +21,6 @@ public class TokenService {
                 .expiresAt(Instant.now().plusSeconds(3600))
                 .subject(authentication.getName()).claim("roles",
                         authentication.getAuthorities().stream().map(GrantedAuthority::getAuthority).toList())
-                .claim("username", authentication.getName())
                 .build();
         return encoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
     }

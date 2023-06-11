@@ -1,9 +1,10 @@
-package pl.lodz.p.it.zzpj.hotelscollector.user.activation.token;
+package pl.lodz.p.it.zzpj.hotelscollector.user.service;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+import pl.lodz.p.it.zzpj.hotelscollector.user.entity.UserActivationTokenEntity;
 
 import java.time.LocalDateTime;
 

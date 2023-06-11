@@ -1,6 +1,7 @@
-package pl.lodz.p.it.zzpj.hotelscollector.user;
+package pl.lodz.p.it.zzpj.hotelscollector.user.service;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import pl.lodz.p.it.zzpj.hotelscollector.user.entity.UserEntity;
 
 import java.util.Optional;
 

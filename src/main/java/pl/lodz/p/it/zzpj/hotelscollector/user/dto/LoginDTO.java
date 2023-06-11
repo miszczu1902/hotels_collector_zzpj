@@ -1,4 +1,4 @@
-package pl.lodz.p.it.zzpj.hotelscollector.user;
+package pl.lodz.p.it.zzpj.hotelscollector.user.dto;
 
 public record LoginDTO(String username, String password) {
 }
