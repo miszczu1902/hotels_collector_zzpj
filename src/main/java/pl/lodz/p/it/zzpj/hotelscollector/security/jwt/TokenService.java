@@ -16,12 +16,11 @@ public class TokenService {
 
     private final JwtEncoder encoder;
 
-    public String generateToken(Authentication authentication) {
+    public String generateToken(String username, Authentication authentication) {
         final JwtClaimsSet claims = JwtClaimsSet.builder().issuer("self").issuedAt(Instant.now())
                 .expiresAt(Instant.now().plusSeconds(3600))
-                .subject(authentication.getName()).claim("roles",
+                .subject(username).claim("roles",
                         authentication.getAuthorities().stream().map(GrantedAuthority::getAuthority).toList())
-                .claim("username", authentication.getName())
                 .build();
         return encoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
     }

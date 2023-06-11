@@ -1,20 +1,26 @@
 package pl.lodz.p.it.zzpj.hotelscollector.user;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import pl.lodz.p.it.zzpj.hotelscollector.user.activation.token.UserActivationTokenRepository;
-import pl.lodz.p.it.zzpj.hotelscollector.utils.exceptions.UserAlreadyExistsException;
+import pl.lodz.p.it.zzpj.hotelscollector.utils.exceptions.*;
 
 import java.time.LocalDateTime;
+import java.util.Locale;
 import java.util.Optional;
 
 @RequiredArgsConstructor
 @Slf4j
 @Service
 public class UserService {
+
+    @Autowired
+    private HttpServletRequest request;
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
@@ -53,5 +59,75 @@ public class UserService {
         }
     }
 
+    @Transactional
+    public void modifyUserRole(String username, String role) throws RoleDoesNotExistException, UserOwnsRoleException, UserDoesntExistException, CanNotModifySelfStateException {
+        final String user = request.getUserPrincipal().getName();
+        if (username.equals(user)) {
+            log.warn("you cant modify self role");
+            throw new CanNotModifySelfStateException("You cant modify self role");
+        }
+        var modifiedUser = userRepository.findByUsername(username);
+        if (modifiedUser.isPresent()) {
+            var modification = modifiedUser.get();
+            try {
+                UserRole userRole = UserRole.valueOf(role.toUpperCase(Locale.ROOT));
+                if (userRole.equals(modification.getRole())) {
+                    log.warn("This user owns this role {}", role);
+                    throw new UserOwnsRoleException("This user owns this role");
+                }
+                modification.setRole(userRole);
+            } catch (IllegalArgumentException e) {
+                log.warn("Specified role doesnt exist {}", role);
+                throw new RoleDoesNotExistException("Specified role doesnt exist, roles in system are: ADMIN, CLIENT, MANAGER");
+            }
+            userRepository.save(modification);
+        } else {
+            log.warn("Specified user doesnt exist {}", username);
+            throw new UserDoesntExistException("User with specified username doesnt exist");
+        }
+    }
 
+    @Transactional
+    public void blockUser(String username) throws UserIsBlockedException, CanNotModifySelfStateException, UserDoesntExistException {
+        final String user = request.getUserPrincipal().getName();
+        if (username.equals(user)) {
+            log.warn("you cant block yourself");
+            throw new CanNotModifySelfStateException("You cant block yourself");
+        }
+        var modifiedUser = userRepository.findByUsername(username);
+        if (modifiedUser.isPresent()) {
+            var modification = modifiedUser.get();
+            if (!modification.getIsEnable()) {
+                log.warn("You cant block user that is already blocked {}", username);
+                throw new UserIsBlockedException("User is already blocked");
+            }
+            modification.setIsEnable(false);
+            userRepository.save(modification);
+        } else {
+            log.warn("Specified user doesnt exist {}", username);
+            throw new UserDoesntExistException("User with specified username doesnt exist");
+        }
+    }
+
+    @Transactional
+    public void unblockUser(String username) throws UserDoesntExistException, UserIsNotBlockedException, CanNotModifySelfStateException {
+        final String user = request.getUserPrincipal().getName();
+        if (username.equals(user)) {
+            log.warn("you cant unblock yourself");
+            throw new CanNotModifySelfStateException("You cant unblock yourself");
+        }
+        var modifiedUser = userRepository.findByUsername(username);
+        if (modifiedUser.isPresent()) {
+            var modification = modifiedUser.get();
+            if (modification.getIsEnable()) {
+                log.warn("You cant unblock user that is not blocked {}", username);
+                throw new UserIsNotBlockedException("User is not blocked");
+            }
+            modification.setIsEnable(true);
+            userRepository.save(modification);
+        } else {
+            log.warn("Specified user doesnt exist {}", username);
+            throw new UserDoesntExistException("User with specified username doesnt exist");
+        }
+    }
 }

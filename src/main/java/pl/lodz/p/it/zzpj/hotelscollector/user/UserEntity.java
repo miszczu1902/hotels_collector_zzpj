@@ -49,6 +49,7 @@ public class UserEntity implements Serializable {
     @Enumerated(EnumType.STRING)
     @NotNull
     @Column
+    @Setter
     private UserRole role;
 
     public UserEntity(String email, String username, String password, Boolean isActive, Boolean isEnable, UserRole role) {
