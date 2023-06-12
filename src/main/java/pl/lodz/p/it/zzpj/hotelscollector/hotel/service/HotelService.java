@@ -33,7 +33,6 @@ public class HotelService {
     @Transactional
     public List<HotelEntity> getAllHotels() {
         var hotels = hotelRepository.findAll();
-
         if(hotels.isEmpty()) {
             return null;
         }

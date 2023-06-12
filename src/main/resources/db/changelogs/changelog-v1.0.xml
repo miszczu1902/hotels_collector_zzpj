@@ -44,5 +44,17 @@
                              referencedTableName="users"
                              referencedColumnNames="id"/>
     </changeSet>
+    <changeSet id="create_opinion_table" author="nikt">
+        <createTable tableName="opinions">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="opinion" type="VARCHAR(254)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_id" type="BIGINT"/>
+            <column name="hotel_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
 
 </databaseChangeLog>

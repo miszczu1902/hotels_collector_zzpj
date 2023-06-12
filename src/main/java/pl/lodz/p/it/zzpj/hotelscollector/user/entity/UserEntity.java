@@ -10,6 +10,8 @@ import lombok.Setter;
 import pl.lodz.p.it.zzpj.hotelscollector.utils.UserRole;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @NoArgsConstructor
 @Entity
@@ -52,6 +54,10 @@ public class UserEntity implements Serializable {
     @Column
     @Setter
     private UserRole role;
+
+    @Setter
+    @OneToMany(mappedBy = "userEntity", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<OpinionEntity> opinionEntities = new ArrayList<>();
 
     public UserEntity(String email, String username, String password, Boolean isActive, Boolean isEnable, UserRole role) {
         this.email = email;
