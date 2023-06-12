@@ -2,6 +2,7 @@ package pl.lodz.p.it.zzpj.hotelscollector.hotel.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import pl.lodz.p.it.zzpj.hotelscollector.user.entity.OpinionEntity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,6 +44,10 @@ public class HotelEntity {
     @Setter
     @OneToMany(mappedBy = "hotelEntity", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<RoomEntity> roomEntities = new ArrayList<>();
+
+    @Setter
+    @OneToMany(mappedBy = "hotelEntity", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<OpinionEntity> opinionEntities = new ArrayList<>();
 
     public HotelEntity(String name, String longitude, String latitude, String city, String street, String number, String additionalAddressInformation, String phoneNumber, List<RoomEntity> roomEntities) {
         this.name = name;
