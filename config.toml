@@ -1,0 +1,15 @@
+concurrent = 1
+check_interval = 0
+
+[[runners]]
+name = "zzpj-hotelscollector"
+url = "https://gitlab.com/"
+token = "TODO"
+executor = "docker"
+[runners.docker]
+image = "zzpj-hotelscollector"
+privileged = true
+disable_cache = false
+volumes = ["/cache"]
+shm_size = 0
+[runners.cache]

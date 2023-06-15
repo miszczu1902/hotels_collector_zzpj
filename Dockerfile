@@ -1,0 +1,5 @@
+FROM openjdk:17
+ENV JAVA_HOME /usr/lib/jvm/java-17-openjdk-amd64
+COPY target/HOTELSCOLLECTOR-0.0.1-SNAPSHOT.jar /HOTELSCOLLECTOR-0.0.1-SNAPSHOT.jar
+EXPOSE 8080
+CMD ["java", "-jar", "/HOTELSCOLLECTOR-0.0.1-SNAPSHOT.jar"]
