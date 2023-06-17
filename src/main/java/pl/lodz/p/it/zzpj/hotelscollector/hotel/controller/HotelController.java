@@ -121,4 +121,13 @@ public class HotelController implements HotelsApi {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @Override
+    public ResponseEntity<Object> getWeatherInHotel(String id, String forecastDays) {
+        var hotel = hotelService.getHotelById(id);
+        if (hotel.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(hotelService.getWeather(id, forecastDays));
+    }
 }

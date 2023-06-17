@@ -20,6 +20,33 @@ paths:
         '404':
           description: Not found any hotel
 
+  /hotels/hotel/weather/{id}:
+    get:
+      tags:
+        - hotelsCollector/hotel/weather
+      description: Get weather in hotel with given id
+      operationId: getWeatherInHotel
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: forecastDaysNumber
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Weather in hotel with given id
+          content:
+            application/json:
+              schema:
+                $ref: ../defs/WeatherHotelResponse.yaml
+        '404':
+          description: Not found hotel
+
 
   /hotels/hotel:
     post:
