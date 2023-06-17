@@ -10,24 +10,3 @@ services:
       POSTGRES_DATABASE: hotel
       POSTGRES_USER: hotel
       POSTGRES_PASSWORD: hotel
-    healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
-      interval: 30s
-      timeout: 10s
-      retries: 5
-
-  hotelscollector:
-    container_name: hotelscollector
-    image: zzpj-hotelscollector:latest
-    ports:
-      - "8080:8080"
-    depends_on:
-      db:
-        condition: service_healthy
-
-#  gitlab-runner:
-#    image: gitlab/gitlab-runner:latest
-#    restart: always
-#    volumes:
-#      - ./config.toml:/etc/gitlab-runner/config.toml
-#      - /var/run/docker.sock:/var/run/docker.sock
