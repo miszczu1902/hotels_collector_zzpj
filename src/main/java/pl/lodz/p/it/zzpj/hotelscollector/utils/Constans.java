@@ -8,4 +8,5 @@ public class Constans {
     public static final String URI_USERS = "/users";
     public static final String URI_HOTELS = "/hotels";
     public static final String URI_ROOMS = "/rooms";
+    public static final String URI_RENTS = "/rents";
 }
