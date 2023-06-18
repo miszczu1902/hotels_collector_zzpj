@@ -51,16 +51,6 @@ public class UserService {
         });
     }
 
-    private void checkIfUserAlreadyExists(String username, String email) throws UserAlreadyExistsException {
-        if (userRepository.existsUserEntityByUsername(username)) {
-            log.warn("User with username {} already exists.", username);
-            throw new UserAlreadyExistsException("User with that username already exists.");
-        } else if (userRepository.existsUserEntityByEmail(email)) {
-            log.warn("User with email {} already exists.", email);
-            throw new UserAlreadyExistsException("User with that email already exists.");
-        }
-    }
-
     @Transactional
     public void modifyUserRole(String username, String role) throws RoleDoesNotExistException, UserOwnsRoleException, UserDoesntExistException, CanNotModifySelfStateException {
         final String user = request.getUserPrincipal().getName();
@@ -130,6 +120,16 @@ public class UserService {
         } else {
             log.warn("Specified user doesnt exist {}", username);
             throw new UserDoesntExistException("User with specified username doesnt exist");
+        }
+    }
+
+    private void checkIfUserAlreadyExists(String username, String email) throws UserAlreadyExistsException {
+        if (userRepository.existsUserEntityByUsername(username)) {
+            log.warn("User with username {} already exists.", username);
+            throw new UserAlreadyExistsException("User with that username already exists.");
+        } else if (userRepository.existsUserEntityByEmail(email)) {
+            log.warn("User with email {} already exists.", email);
+            throw new UserAlreadyExistsException("User with that email already exists.");
         }
     }
 }
