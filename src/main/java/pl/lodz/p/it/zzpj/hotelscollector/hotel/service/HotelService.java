@@ -38,7 +38,7 @@ public class HotelService {
     @Transactional
     public List<HotelEntity> getAllHotels() {
         var hotels = hotelRepository.findAll();
-        if(hotels.isEmpty()) {
+        if (hotels.isEmpty()) {
             return null;
         }
         return hotels;
@@ -48,7 +48,7 @@ public class HotelService {
     @Transactional
     public boolean deleteHotel(String id) {
         var hotel = hotelRepository.findById(id);
-        if(hotel.isPresent()) {
+        if (hotel.isPresent()) {
             hotelRepository.delete(hotel.get());
         } else {
             return false;
@@ -58,9 +58,7 @@ public class HotelService {
 
     public String getWeather(String id, String forecastDays) {
         var hotel = hotelRepository.findById(id);
-        if(hotel.isPresent()) {
-            hotelRepository.delete(hotel.get());
-        } else {
+        if (hotel.isEmpty()) {
             return null;
         }
 

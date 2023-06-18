@@ -64,5 +64,26 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
                 new ResponseBodyErrors(List.of(new SingleErrorDTO(BAD_REQUEST, LocalDateTime.now(), ex.getMessage()))),
                 new HttpHeaders(), BAD_REQUEST, request);
     }
+
+    @ExceptionHandler(value = {RentNotExistException.class})
+    public ResponseEntity<Object> RentNotExistException(RuntimeException ex, WebRequest request) {
+        return handleExceptionInternal(ex,
+                new ResponseBodyErrors(List.of(new SingleErrorDTO(NOT_FOUND, LocalDateTime.now(), ex.getCause().getMessage()))),
+                new HttpHeaders(), NOT_FOUND, request);
+    }
+
+    @ExceptionHandler(value = {RoomNotAvailableException.class})
+    public ResponseEntity<Object> RoomNotAvailableException(RuntimeException ex, WebRequest request) {
+        return handleExceptionInternal(ex,
+                new ResponseBodyErrors(List.of(new SingleErrorDTO(CONFLICT, LocalDateTime.now(), ex.getCause().getMessage()))),
+                new HttpHeaders(), CONFLICT, request);
+    }
+
+    @ExceptionHandler(value = {JsonParserException.class})
+    public ResponseEntity<Object> JsonParserException(RuntimeException ex, WebRequest request) {
+        return handleExceptionInternal(ex,
+                new ResponseBodyErrors(List.of(new SingleErrorDTO(INTERNAL_SERVER_ERROR, LocalDateTime.now(), ex.getCause().getMessage()))),
+                new HttpHeaders(), INTERNAL_SERVER_ERROR, request);
+    }
 }
 

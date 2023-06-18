@@ -1,3 +1,5 @@
+INSERT INTO users (id, username, email, password, is_active, is_enable, role) VALUES (1, 'TheHubert21', 'stary2111@gmail.com', '$2a$10$tuBH/t6MxHWdyBG.DV/Uw.23TkQWT4rVS/Bcm7qAe8RwGXqXz6yEi', true, true, 'CLIENT');
+
 INSERT INTO hotels (id, name, longitude, latitude, city, street, number, additional_address_information, phone_number)
 VALUES
     (-1,'Pan kiedyś stał nad hotelem', '19.4927', '49.8833', 'Wadowice', 'Żółta', '2137', 'Hotel Wadowice', '213721379'),
