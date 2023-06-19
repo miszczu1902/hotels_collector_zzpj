@@ -1,5 +1,10 @@
-FROM openjdk:17
-ENV JAVA_HOME /usr/lib/jvm/java-17-openjdk-amd64
-COPY target/HOTELSCOLLECTOR-0.0.1-SNAPSHOT.jar /HOTELSCOLLECTOR-0.0.1-SNAPSHOT.jar
+FROM maven:3.8.4-openjdk-17-slim
+
+RUN apt-get update && \
+    apt-get install -y docker
+
+ARG JAR_FILE
+COPY  ${JAR_FILE} "app.jar"
+
 EXPOSE 8080
-CMD ["java", "-jar", "/HOTELSCOLLECTOR-0.0.1-SNAPSHOT.jar"]
+CMD ["java", "-jar", "app.jar"]

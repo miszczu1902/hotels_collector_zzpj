@@ -33,3 +33,4 @@ build/
 .vscode/
 
 **/*.original
+/logfile.txt

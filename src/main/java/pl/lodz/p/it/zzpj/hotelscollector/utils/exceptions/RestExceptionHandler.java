@@ -102,5 +102,12 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
                 new HttpHeaders(), INTERNAL_SERVER_ERROR, request);
     }
 
+    @ExceptionHandler(value = {RentNotExistException.class})
+    public ResponseEntity<Object> RentNotExistException(RuntimeException ex, WebRequest request) {
+        return handleExceptionInternal(ex,
+                new ResponseBodyErrors(List.of(new SingleErrorDTO(NOT_FOUND, LocalDateTime.now(), ex.getCause().getMessage()))),
+                new HttpHeaders(), NOT_FOUND, request);
+    }
+
 }
 

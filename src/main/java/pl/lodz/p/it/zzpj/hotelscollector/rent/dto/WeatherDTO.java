@@ -36,11 +36,11 @@ public class WeatherDTO {
     @Data
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static class DayDTO {
-        Double mintemp_c;
-        Double maxtemp_c;
-        Double avgtemp_c;
-        Double maxwind_kph;
-        Double avghumidity;
+        private Double mintemp_c;
+        private Double maxtemp_c;
+        private Double avgtemp_c;
+        private Double maxwind_kph;
+        private Double avghumidity;
     }
 }
 

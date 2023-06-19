@@ -1,0 +1,20 @@
+stages:
+  - test
+  - deploy
+
+test:
+  image: miszczu1902/zzpj-hotelscollector:latest
+  stage: test
+  artifacts:
+    when: always
+    paths:
+      - ./tests-log
+  script:
+    - mvn test
+
+deploy:
+  image: miszczu1902/zzpj-hotelscollector:latest
+  stage: deploy
+  script:
+    - cat ./settings.xml > ~/.m2/settings-docker.xml
+    - mvn install -DskipTests=true
