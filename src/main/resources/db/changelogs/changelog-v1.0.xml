@@ -56,30 +56,5 @@
             <column name="hotel_id" type="BIGINT"/>
         </createTable>
     </changeSet>
-    <changeSet id="create-table-rents" author="bmiszczak">
-        <createTable tableName="rents">
-            <column name="id" type="UUID">
-                <constraints primaryKey="true"/>
-            </column>
-            <column name="begin_time" type="date"/>
-            <column name="end_time" type="date"/>
-            <column name="is_active" type="boolean" defaultValue="false"/>
-            <column name="rent_cost" type="double"/>
-            <column name="room_id" type="bigint">
-            </column>
-            <column name="user_id" type="bigint">
-            </column>
-        </createTable>
-        <addForeignKeyConstraint baseTableName="rents"
-                                 baseColumnNames="room_id"
-                                 constraintName="fk_rents_rooms"
-                                 referencedTableName="rooms"
-                                 referencedColumnNames="id"/>
-        <addForeignKeyConstraint baseTableName="rents"
-                                 baseColumnNames="user_id"
-                                 constraintName="fk_rents_users"
-                                 referencedTableName="users"
-                                 referencedColumnNames="id"/>
-    </changeSet>
 
 </databaseChangeLog>
