@@ -38,7 +38,6 @@ public class OpinionController {
     @GetMapping("/get-all-opinions")
     public ResponseEntity<List<OpinionForListDTO>> getAllOpinions() {
         final var responseBody = opinionService.getAllOpinions().stream().map(OpinionMapper::opinionToOpinionForListDTO).toList();
-
         return ResponseEntity.ok(responseBody);
     }
 }
