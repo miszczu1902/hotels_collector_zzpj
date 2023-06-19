@@ -23,6 +23,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
                 new ResponseBodyErrors(List.of(new SingleErrorDTO(CONFLICT, LocalDateTime.now(), ex.getMessage()))),
                 new HttpHeaders(), CONFLICT, request);
     }
+
     @ExceptionHandler(value = {RoleDoesNotExistException.class})
     public ResponseEntity<Object> RoleDoesNotExistException(RuntimeException ex, WebRequest request) {
         return handleExceptionInternal(ex,
@@ -32,6 +33,28 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(value = {UserDoesntExistException.class})
     public ResponseEntity<Object> UserDoesntExistException(RuntimeException ex, WebRequest request) {
+        return handleExceptionInternal(ex,
+                new ResponseBodyErrors(List.of(new SingleErrorDTO(CONFLICT, LocalDateTime.now(), ex.getMessage()))),
+                new HttpHeaders(), CONFLICT, request);
+    }
+
+
+    @ExceptionHandler(value = {HotelDoesntexistsException.class})
+    public ResponseEntity<Object> HotelDoesntexistsException(RuntimeException ex, WebRequest request) {
+        return handleExceptionInternal(ex,
+                new ResponseBodyErrors(List.of(new SingleErrorDTO(NOT_FOUND, LocalDateTime.now(), ex.getMessage()))),
+                new HttpHeaders(), NOT_FOUND, request);
+    }
+
+    @ExceptionHandler(value = {OpinionsDoesntExistException.class})
+    public ResponseEntity<Object> OpinionsDoesntExistException(RuntimeException ex, WebRequest request) {
+        return handleExceptionInternal(ex,
+                new ResponseBodyErrors(List.of(new SingleErrorDTO(NOT_FOUND, LocalDateTime.now(), ex.getMessage()))),
+                new HttpHeaders(), NOT_FOUND, request);
+    }
+
+    @ExceptionHandler(value = {OpinionAlreadyExistsException.class})
+    public ResponseEntity<Object> OpinionAlreadyExistsException(RuntimeException ex, WebRequest request) {
         return handleExceptionInternal(ex,
                 new ResponseBodyErrors(List.of(new SingleErrorDTO(CONFLICT, LocalDateTime.now(), ex.getMessage()))),
                 new HttpHeaders(), CONFLICT, request);
@@ -65,13 +88,6 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
                 new HttpHeaders(), BAD_REQUEST, request);
     }
 
-    @ExceptionHandler(value = {RentNotExistException.class})
-    public ResponseEntity<Object> RentNotExistException(RuntimeException ex, WebRequest request) {
-        return handleExceptionInternal(ex,
-                new ResponseBodyErrors(List.of(new SingleErrorDTO(NOT_FOUND, LocalDateTime.now(), ex.getCause().getMessage()))),
-                new HttpHeaders(), NOT_FOUND, request);
-    }
-
     @ExceptionHandler(value = {RoomNotAvailableException.class})
     public ResponseEntity<Object> RoomNotAvailableException(RuntimeException ex, WebRequest request) {
         return handleExceptionInternal(ex,
@@ -85,5 +101,6 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
                 new ResponseBodyErrors(List.of(new SingleErrorDTO(INTERNAL_SERVER_ERROR, LocalDateTime.now(), ex.getCause().getMessage()))),
                 new HttpHeaders(), INTERNAL_SERVER_ERROR, request);
     }
+
 }
 

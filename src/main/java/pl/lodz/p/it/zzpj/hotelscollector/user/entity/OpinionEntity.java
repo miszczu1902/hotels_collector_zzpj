@@ -17,6 +17,7 @@ public class OpinionEntity {
     @Column(name = "id")
     private long id;
 
+    @Setter
     @Column(name = "opinion", nullable = false)
     private String opinion;
 
