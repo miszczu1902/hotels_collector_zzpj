@@ -35,7 +35,7 @@ public class OpinionService {
             log.warn("Hotel doesnt exist");
             throw new HotelDoesntexistsException("Hotel doesnt exist");
         }
-        final var opinion = opinionRepository.findOpinionEntitiesByUserEntity(user);
+        final var opinion = opinionRepository.findOpinionEntitiesByUserEntityAndHotelEntity(user, hotel);
         if (opinion.isPresent()) {
             log.warn("You have already added opinion about this hotel");
             throw new OpinionAlreadyExistsException("You have already added opinion about this hotel");
@@ -62,7 +62,7 @@ public class OpinionService {
             log.warn("Hotel doesnt exist");
             throw new HotelDoesntexistsException("Hotel doesnt exist");
         }
-        final var opinion = opinionRepository.findOpinionEntitiesByUserEntity(user);
+        final var opinion = opinionRepository.findOpinionEntitiesByUserEntityAndHotelEntity(user, hotel);
         if (opinion.isEmpty()) {
             log.warn("You did not add opinion about this hotel");
             throw new OpinionsDoesntExistException("You did not add opinion about this hotel");
