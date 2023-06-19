@@ -1,4 +1,8 @@
-INSERT INTO users (id, username, email, password, is_active, is_enable, role) VALUES (1, 'TheHubert21', 'stary2111@gmail.com', '$2a$10$tuBH/t6MxHWdyBG.DV/Uw.23TkQWT4rVS/Bcm7qAe8RwGXqXz6yEi', true, true, 'CLIENT');
+INSERT INTO users (id, username, email, password, is_active, is_enable, role)
+VALUES (-1, 'TheHubert21', 'stary2111@gmail.com', '$2a$10$tuBH/t6MxHWdyBG.DV/Uw.23TkQWT4rVS/Bcm7qAe8RwGXqXz6yEi', true, true, 'CLIENT'),
+       (-2, 'HubertCzacha4', 'jp2@wp.xd', '$2a$10$tuBH/t6MxHWdyBG.DV/Uw.23TkQWT4rVS/Bcm7qAe8RwGXqXz6yEi', true, true, 'MANAGER'),
+       (-3, 'BartoszMiszczak', 'miszczu2137@wp.xd', '$2a$10$tuBH/t6MxHWdyBG.DV/Uw.23TkQWT4rVS/Bcm7qAe8RwGXqXz6yEi', true, true, 'ADMIN'),
+       (-4, 'BartekGit1', 'git111112@wp.xd', '$2a$10$tuBH/t6MxHWdyBG.DV/Uw.23TkQWT4rVS/Bcm7qAe8RwGXqXz6yEi', true, true, 'CLIENT');
 
 INSERT INTO hotels (id, name, longitude, latitude, city, street, number, additional_address_information, phone_number)
 VALUES
@@ -35,4 +39,3 @@ VALUES
     (-18, 12, 1, true, false, 'Mały pokój dla singla', '["Free_WiFi", "TV", "Desk"]', -9),
     (-19, 35, 4, true, true, 'Apartament rodzinny', '["Balcony", "Kitchenette", "Room_service", "Baby_cot"]', -1),
     (-20, 16, 1, true, true, 'Pokój z widokiem na park', '["Minibar", "Coffee_maker", "Safe"]', -2);
-
