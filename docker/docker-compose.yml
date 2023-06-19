@@ -1,0 +1,47 @@
+version:  "3.8"
+
+services:
+  db:
+    container_name: db
+    image: postgres:latest
+    ports:
+      - "5431:5432"
+    environment:
+      POSTGRES_DATABASE: hotel
+      POSTGRES_USER: hotel
+      POSTGRES_PASSWORD: hotel
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U hotel" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  hotelscollector:
+    container_name: hotelscollector
+    image: miszczu1902/zzpj-hotelscollector:latest
+    ports:
+      - "8080:8080"
+    depends_on:
+      db:
+        condition: service_healthy
+
+  gitlab:
+    image: gitlab/gitlab-ce:latest
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+      - "22:22"
+
+  gitlab-runner:
+    image: gitlab/gitlab-runner:latest
+    restart: always
+    volumes:
+      - ./gitlab/config.toml:/etc/gitlab-runner/config.toml
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - REGISTER_NON_INTERACTIVE=true
+    command: [ "run", "--user=gitlab-runner", "--working-directory=/home/gitlab-runner" ]
+    depends_on:
+      gitlab:
+        condition: service_healthy

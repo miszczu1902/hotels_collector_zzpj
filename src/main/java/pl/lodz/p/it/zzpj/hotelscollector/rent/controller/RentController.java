@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import pl.lodz.p.it.zzpj.hotelscollector.hotel.service.HotelService;
@@ -36,6 +37,7 @@ public class RentController {
 
     private final ObjectMapper objectMapper;
 
+    @PreAuthorize("hasRole('CLIENT') || hasRole('MANAGER')")
     @PostMapping("/reserve")
     public ResponseEntity<RentDTO> reserveRoom(@RequestBody CreateRentDTO createRentDTO) throws JsonParserException, RoomNotAvailableException {
         RentEntity rentEntity = rentService.reserveRoom(createRentDTO).orElseThrow();
@@ -61,6 +63,7 @@ public class RentController {
                 .body(RentMapper.createRentDTOWithWeather(rentEntity, weather));
     }
 
+    @PreAuthorize("hasRole('CLIENT') || hasRole('MANAGER')")
     @GetMapping("/rent/{rentId}")
     public ResponseEntity<RentDTO> getRentByRentId(@PathVariable String rentId) {
         return rentService.getRentById(rentId).map(rent ->
@@ -68,6 +71,7 @@ public class RentController {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
+    @PreAuthorize("hasRole('MANAGER')")
     @GetMapping
     public ResponseEntity<List<RentDTO>> getAllRents(@RequestParam(required = false) Optional<String> username) {
         return ResponseEntity.ok()
@@ -77,7 +81,7 @@ public class RentController {
                                 .map(RentMapper::createRentDTO).toList()));
     }
 
-
+    @PreAuthorize("hasRole('CLIENT') || hasRole('MANAGER')")
     @PatchMapping("/rent/{rentId}/cancel")
     public ResponseEntity<Object> cancelRent(@PathVariable String rentId) throws RentNotExistException {
         rentService.endReservation(rentId);
